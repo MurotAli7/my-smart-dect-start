@@ -87,6 +87,13 @@ wss.on('connection', (ws, req) => {
       // Barcha brauzerlarga yangi holatni yuborish
       broadcast({ type: 'state', red: ledState.red, blue: ledState.blue });
     }
+
+    // ---- ESP32 dan knopka bosildi xabari ----
+    if (msg.type === 'button' && ws.role === 'esp32') {
+      console.log('Knopka bosildi!');
+      // Barcha brauzerlarga yuborish
+      broadcast({ type: 'button', action: 'pressed' });
+    }
   });
 
   ws.on('close', () => {
